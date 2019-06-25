@@ -1,4 +1,14 @@
 #include <stdio.h> 
+#include <stdlib.h>
+typedef struct sudoku{
+	int row;
+	int col;
+	int *Valid_numbers;
+	int count;
+	int checked_all
+;} *PSUDOKU,SUDOKU;  
+
+
 
 
 int calculate_row( int[][9], int);
@@ -12,6 +22,9 @@ int check_no_duplicate_col(int[][9], int,int);
 int check_no_duplicate_box(int[][9], int,int,int); 
 int Valid_Number(int [][9],int,int,int);
 
+int get_size_valid_num(int[][9],int,int);
+int *get_valid_num(int[][9],int,int,int); 
+
 
 void test_function_calculate_col(int[][9]);
 void test_function_calculate_row(int[][9]);
@@ -20,6 +33,7 @@ void test_function_check_no_duplicate_row(int [][9]);
 void test_function_check_no_duplicate_col(int [][9]);
 void test_function_check_no_duplicate_box(int [][9]);
 void test_function_Valid_number(int [][9]);
+void test_get_size_valid_num(int[][9]);
 
 int main(){
 
@@ -44,7 +58,13 @@ int main(){
 	test_function_check_no_duplicate_col(problem);
 	test_function_check_no_duplicate_box(problem);
 	test_function_Valid_number(problem); 
-
+	test_get_size_valid_num(problem);
+	int size= get_size_valid_num(problem,0,1);
+	int *ptr=get_valid_num(problem,0,1,size);
+	printf("  hej ");  
+	printf("  %d ", ptr[0]);  
+	
+	
 				
 ;}		
 
@@ -179,7 +199,12 @@ void test_function_Valid_number(int problem[9][9]){
 	
 	
 }	
-	
+void test_get_size_valid_num(int problem[9][9]){
+	if(get_size_valid_num(problem,0,0)==1){
+		printf("test_get_size_valid_num succeeded");
+	}
+	else{ printf(" * ERROR * test_get_size_valid_num FAILED");}
+}
 
 int calculate_col( int (*problem)[9], int col){
 	int sum=0; 
@@ -275,4 +300,29 @@ int Valid_Number(int(*problem)[9], int row, int col,int val){
 	}
 	return Is_Valid;
 	
+}
+
+int get_size_valid_num(int(*problem)[9], int row, int col){
+	int size=0;
+	for(int i=1; i <10; i++){
+		if(Valid_Number(problem,row,col,i))
+		{
+			size++;
+		}
+		
+	}
+	return size;  
+}	
+
+int *get_valid_num(int(*problem)[9], int row, int col, int size){
+	int count=0;
+	int *ptr=malloc(size*sizeof(int));
+	for(int i=1; i < 10;i++){
+		if( Valid_Number(problem,row,col,i) ){
+		ptr[count]=i;
+		count++; 
+		}
+			
+	}
+	return ptr; 
 }
