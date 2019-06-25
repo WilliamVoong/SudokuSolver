@@ -7,7 +7,11 @@ int calculate_box( int[][9], int, int);
 int check_col(int[][9], int); 
 int check_row(int[][9], int); 
 int check_box(int[][9], int, int); 
+
 void test_function_calculate_col(int[][9]);
+void test_function_calculate_row(int[][9]);
+void test_function_calculate_box(int[][9]);
+
 
 
 
@@ -28,7 +32,9 @@ int main(){
 					};
 
 	test_function_calculate_col(problem); 
-	
+	test_function_calculate_row(problem);
+	test_function_calculate_box(problem); 
+	//printf("%d", calculate_box(problem, 5,3));
 
 				
 ;}		
@@ -43,11 +49,49 @@ void test_function_calculate_col(int problem[9][9]){
 	else{test_sucess=0;};
 	
 	if(test_sucess){
-		printf("test_function_calculate_row succeeded");
-	}	
+		printf("test_function_calculate_col succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_calculate_col FAILED ");
+	}
+		
 		
 }
-
+void test_function_calculate_row(int problem[9][9]){
+	int test_sucess=1;
+	if (calculate_row(problem, 0)==17){}
+	else if (calculate_row(problem, 5)==14){}
+	else if (calculate_row(problem, 7)==9){}
+	else{test_sucess=0;};
+	
+	
+	if(test_sucess){
+		printf("test_function_calculate_row succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_calculate_box FAILED \n");
+	}
+		
+		
+}
+void test_function_calculate_box(int problem[9][9]){
+	int test_sucess=1;
+	
+	if (calculate_box(problem, 0,4)==21){}
+	else if (calculate_box(problem, 5,3)==6){}
+	else if (calculate_box(problem, 7,1)==27){}
+	else{test_sucess=0;};
+	
+	
+	if(test_sucess){
+		printf("test_function_calculate_box succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_calculate_box FAILED \n");
+	}
+		
+		
+}
 
 
 
@@ -75,8 +119,8 @@ int calculate_box( int(*problem)[9], int row, int col){
 	int sum=0; 
 	int index_row=row/3; 
 	int index_col=col/3; 
-	for (int i =0; i < index_col*3+3; i++){
-			for(int j =0; j < index_col*3+3; j++){
+	for (int i =index_row*3; i < index_row*3+3; i++){
+			for(int j =index_col*3; j < index_col*3+3; j++){
 				sum+=problem[i][j]; 
 			}	
 				
