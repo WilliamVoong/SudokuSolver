@@ -7,11 +7,16 @@ int calculate_box( int[][9], int, int);
 int check_col(int[][9], int); 
 int check_row(int[][9], int); 
 int check_box(int[][9], int, int); 
+int check_no_duplicate_row(int[][9], int,int); 
+int check_no_duplicate_col(int[][9], int,int); 
+int check_no_duplicate_box(int[][9], int,int,int); 
+
+
 
 void test_function_calculate_col(int[][9]);
 void test_function_calculate_row(int[][9]);
 void test_function_calculate_box(int[][9]);
-
+void test_function_check_no_duplicate_row(int [][9]);
 
 
 
@@ -34,7 +39,7 @@ int main(){
 	test_function_calculate_col(problem); 
 	test_function_calculate_row(problem);
 	test_function_calculate_box(problem); 
-	//printf("%d", calculate_box(problem, 5,3));
+	test_function_check_no_duplicate_row(problem);
 
 				
 ;}		
@@ -75,6 +80,7 @@ void test_function_calculate_row(int problem[9][9]){
 		
 }
 void test_function_calculate_box(int problem[9][9]){
+
 	int test_sucess=1;
 	
 	if (calculate_box(problem, 0,4)==21){}
@@ -92,6 +98,30 @@ void test_function_calculate_box(int problem[9][9]){
 		
 		
 }
+void test_function_check_no_duplicate_row(int problem[9][9]){
+	int test_sucess=1;
+	if( check_no_duplicate_row(problem, 1,3)==0){}
+	else{test_sucess=0;}
+	
+	if( check_no_duplicate_row (problem, 7,3)){
+		test_sucess=1;
+	}else{
+	test_sucess=0;}
+	
+	if( check_no_duplicate_row (problem, 8,3)){
+		test_sucess=0;
+	}
+	else{test_sucess=1;}
+	
+	if(test_sucess){
+		printf("test_function_check_no_duplicates_row succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_check_no_duplicates_row  FAILED \n");
+	}
+		
+	
+}
 
 int calculate_col( int (*problem)[9], int col){
 	int sum=0; 
@@ -108,7 +138,7 @@ int calculate_row( int(*problem)[9], int row){
 	}
 	return sum;	
 }
-int calculate_box( int(*problem)[9], int row, int col,val){
+int calculate_box( int(*problem)[9], int row, int col){
 	int sum=0; 
 	int index_row=row/3; 
 	int index_col=col/3; 
@@ -131,13 +161,13 @@ int check_no_duplicate_row(int problem[9][9], int row,int val){
 }
 
 
-int check_no_duplicate_col(int problem[9][9], int row,int value_to_check){
+int check_no_duplicate_col(int problem[9][9], int col,int value_to_check){
 	for (int i =0; i < 9; i++){
 		if(problem[i][col]==value_to_check){
 			return 0;
 		}
 	}
-	return 1
+	return 1;
 }
 
 int check_no_duplicate_box( int(*problem)[9], int row, int col,int val){
