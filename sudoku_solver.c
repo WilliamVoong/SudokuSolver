@@ -17,8 +17,8 @@ void test_function_calculate_col(int[][9]);
 void test_function_calculate_row(int[][9]);
 void test_function_calculate_box(int[][9]);
 void test_function_check_no_duplicate_row(int [][9]);
-
-
+void test_function_check_no_duplicate_col(int [][9]);
+void test_function_check_no_duplicate_box(int [][9]);
 
 int main(){
 
@@ -40,6 +40,8 @@ int main(){
 	test_function_calculate_row(problem);
 	test_function_calculate_box(problem); 
 	test_function_check_no_duplicate_row(problem);
+	test_function_check_no_duplicate_col(problem);
+	test_function_check_no_duplicate_box(problem);
 
 				
 ;}		
@@ -122,6 +124,48 @@ void test_function_check_no_duplicate_row(int problem[9][9]){
 		
 	
 }
+void test_function_check_no_duplicate_col(int problem[9][9]){
+	int test_sucess=1;
+	if( check_no_duplicate_col(problem, 1,3)==0){}
+	else{test_sucess=0;}
+	
+	if( check_no_duplicate_col(problem, 7,3)==0){
+	}else{
+	test_sucess=0;}
+	
+	if( check_no_duplicate_col(problem, 8,3)==0){
+	}
+	else{test_sucess=0;}
+	
+	if(test_sucess){
+		printf("test_function_check_no_duplicates_col succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_check_no_duplicates_col  FAILED \n");
+	}
+		
+	
+}
+void test_function_check_no_duplicate_box(int problem[9][9]){
+	int test_sucess=1;
+	if(check_no_duplicate_box(problem, 4,3,3))
+	{}
+	else{test_sucess=0;}
+	if(check_no_duplicate_box(problem, 4,3,5))
+	{test_sucess=0;}
+	else{test_sucess=1;}
+	if(test_sucess){
+		printf("test_function_check_no_duplicates_box succeeded \n");
+	}
+	else{
+		printf("* ERROR * test_function_check_no_duplicates_box  FAILED \n");
+	}
+		
+	
+	
+}
+	
+	
 
 int calculate_col( int (*problem)[9], int col){
 	int sum=0; 
@@ -190,18 +234,22 @@ int check_no_duplicate_box( int(*problem)[9], int row, int col,int val){
 
 int check_row(int(*problem)[9], int row){
 	if( calculate_row(problem,row) > 45){return 0;}
-	else		 {return 1; }
+	if(!(check_no_duplicate_row(problem,row))){return 0;} // if duplicate exsist, return 0
+	else	{return 1; }
 	
 }
 
 int check_col( int(*problem)[9], int col){
 	if( calculate_row(problem,col) > 45){return 0;}
+	if(!(check_no_duplicate_co(problem,col))){return 0;}
 	else		 {return 1;}
 	
 }			
 
-int check_box( int(*problem)[9], int row, int col){
+int check_box( int(*problem)[9], int row, int col, int val){
 	if( calculate_box(problem,col,row) > 45){ return 0;}
-	else		 {return 1;}
+	else if ( !(check_no_duplicate_box(problem,row,col,val)) )
+	{return 0;}
+	else {return 1;}
 	
 }		
