@@ -1,3 +1,6 @@
+
+The plan
+
 1.  create a linked list of every coordinate that contains zero, when creating a member, also get the valid numbers and the size.
 2.  traverse the list from beginiing to end
 3.  if number is valid move to next. 
