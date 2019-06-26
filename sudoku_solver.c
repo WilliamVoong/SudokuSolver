@@ -4,9 +4,12 @@ typedef struct sudoku{
 	int row;
 	int col;
 	int *Valid_numbers;
+	int size;
 	int count;
-	int checked_all
-;} *PSUDOKU,SUDOKU;  
+	int checked_all;
+	struct sudoku *prev;
+	struct sudoku *next;
+} *PSUDOKU,SUDOKU;  
 
 
 
@@ -24,6 +27,8 @@ int Valid_Number(int [][9],int,int,int);
 
 int get_size_valid_num(int[][9],int,int);
 int *get_valid_num(int[][9],int,int,int); 
+int Is_changeable(int[][9],int,int);
+SUDOKU *create_linked_list(int[][9], struct sudoku *); 
 
 
 void test_function_calculate_col(int[][9]);
@@ -36,6 +41,12 @@ void test_function_Valid_number(int [][9]);
 void test_get_size_valid_num(int[][9]);
 
 int main(){
+struct sudoku *head=( (struct sudoku *) malloc(sizeof(SUDOKU)));;
+struct sudoku *end= ((struct sudoku *) malloc(sizeof(SUDOKU)) );;
+PSUDOKU linkedlist= head;
+linkedlist->prev=NULL; 
+
+
 
   int problem[9][9]= { 	{ 0, 0, 4,   0, 0, 0,   0, 6, 7 },
                         { 3, 0, 0,   4, 7, 0,   0, 0, 5 },
@@ -50,6 +61,7 @@ int main(){
                         { 9, 3, 0,   0, 0, 0,   7, 1, 0 } 
 						
 					};
+linkedlist=create_linked_list(problem,linkedlist); 
 
 	test_function_calculate_col(problem); 
 	test_function_calculate_row(problem);
@@ -62,7 +74,11 @@ int main(){
 	int size= get_size_valid_num(problem,0,1);
 	int *ptr=get_valid_num(problem,0,1,size);
 	printf("  hej ");  
-	printf("  %d ", ptr[0]);  
+	linkedlist= head;
+	linkedlist=linkedlist->next;
+	linkedlist=linkedlist->next;
+	printf("  %d ", linkedlist->Valid_numbers[2]); 
+	printf("  %d ", linkedlist->size); 
 	
 	
 				
@@ -242,8 +258,6 @@ int check_no_duplicate_row(int problem[9][9], int row,int val){
 	}
 	return 1;
 }
-
-
 int check_no_duplicate_col(int problem[9][9], int col,int value_to_check){
 	for (int i =0; i < 9; i++){
 		if(problem[i][col]==value_to_check){
@@ -252,7 +266,6 @@ int check_no_duplicate_col(int problem[9][9], int col,int value_to_check){
 	}
 	return 1;
 }
-
 int check_no_duplicate_box( int(*problem)[9], int row, int col,int val){
 	int index_row=row/3; 
 	int index_col=col/3; 
@@ -277,14 +290,12 @@ int check_row(int(*problem)[9], int row, int val){
 	else	{return 1; }
 	
 }
-
 int check_col( int(*problem)[9], int col, int val){
 	if( calculate_row(problem,col) > 45){return 0;}
 	if(!(check_no_duplicate_col(problem,col, val))){return 0;}
 	else		 {return 1;}
 	
 }			
-
 int check_box( int(*problem)[9], int row, int col, int val){
 	if( calculate_box(problem,col,row) > 45){ return 0;}
 	else if ( !(check_no_duplicate_box(problem,row,col,val)) )
@@ -301,7 +312,6 @@ int Valid_Number(int(*problem)[9], int row, int col,int val){
 	return Is_Valid;
 	
 }
-
 int get_size_valid_num(int(*problem)[9], int row, int col){
 	int size=0;
 	for(int i=1; i <10; i++){
@@ -313,7 +323,6 @@ int get_size_valid_num(int(*problem)[9], int row, int col){
 	}
 	return size;  
 }	
-
 int *get_valid_num(int(*problem)[9], int row, int col, int size){
 	int count=0;
 	int *ptr=malloc(size*sizeof(int));
@@ -326,3 +335,46 @@ int *get_valid_num(int(*problem)[9], int row, int col, int size){
 	}
 	return ptr; 
 }
+
+int Is_changeable( int(*problem)[9] , int row, int col){
+	if( problem[row][col]==0){
+		return 1;
+	}
+	else{return 0;} 
+}
+
+
+
+struct sudoku *create_linked_list(int (*problem)[9], PSUDOKU linkedlist){ // this 
+	PSUDOKU new_ptr; 
+	PSUDOKU prev_ptr;
+	int size;
+	for (int i = 0; i<9; i++){
+		for(int j=0; j < 9; j++){
+			
+			if(Is_changeable(problem,i,j)){
+				 prev_ptr=linkedlist; 
+				 new_ptr=(struct sudoku *) malloc(sizeof(SUDOKU));
+				 linkedlist->next=new_ptr; 
+	
+				 linkedlist=new_ptr; 
+				 linkedlist->prev=prev_ptr; 
+				 
+				 linkedlist->row=i; 
+				 linkedlist->col=j; 
+				 size=get_size_valid_num(problem,i,j);
+				 
+				 linkedlist->size=size; 
+				 linkedlist->Valid_numbers=get_valid_num(problem,i,j,size); 
+				 
+				 
+				 
+			}
+			
+		}
+	}
+	linkedlist->next=NULL; 
+	return linkedlist; 
+	
+}
+
