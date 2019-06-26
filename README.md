@@ -6,7 +6,6 @@ The program only fails if the sudoku is unsolvable, as it tries every single com
 
 
 
-![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/Capture.PNG)
 
 Demonstration of it solving one of the "hardest sudoku puzzle".
 https://www.telegraph.co.uk/news/science/science-news/9359579/Worlds-hardest-sudoku-can-you-crack-it.html
