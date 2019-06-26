@@ -29,7 +29,7 @@ int get_size_valid_num(int[][9],int,int);
 int *get_valid_num(int[][9],int,int,int); 
 int Is_changeable(int[][9],int,int);
 SUDOKU *create_linked_list(int[][9], struct sudoku *); 
-
+int tried_all_valid_numbers(struct sudoku *); 
 
 void test_function_calculate_col(int[][9]);
 void test_function_calculate_row(int[][9]);
@@ -39,6 +39,11 @@ void test_function_check_no_duplicate_col(int [][9]);
 void test_function_check_no_duplicate_box(int [][9]);
 void test_function_Valid_number(int [][9]);
 void test_get_size_valid_num(int[][9]);
+
+
+void change_value_problem(int[][9], int,int,int);
+void print_data_linkedlist(struct sudoku *);
+void print_sudoku(int problem[][9]);
 
 int main(){
 struct sudoku *head=( (struct sudoku *) malloc(sizeof(SUDOKU)));;
@@ -61,6 +66,7 @@ linkedlist->prev=NULL;
                         { 9, 3, 0,   0, 0, 0,   7, 1, 0 } 
 						
 					};
+
 linkedlist=create_linked_list(problem,linkedlist); 
 
 	test_function_calculate_col(problem); 
@@ -71,21 +77,61 @@ linkedlist=create_linked_list(problem,linkedlist);
 	test_function_check_no_duplicate_box(problem);
 	test_function_Valid_number(problem); 
 	test_get_size_valid_num(problem);
-	int size= get_size_valid_num(problem,0,1);
-	int *ptr=get_valid_num(problem,0,1,size);
-	printf("  hej ");  
+	
 	linkedlist= head;
 	linkedlist=linkedlist->next;
-	linkedlist=linkedlist->next;
-	printf("  %d ", linkedlist->Valid_numbers[2]); 
-	printf("  %d ", linkedlist->size); 
+	//linkedlist=linkedlist->next;
 	
+	while(linkedlist){
+		if(tried_all_valid_numbers(linkedlist)){  
+			linkedlist->count=0;
+			problem[linkedlist->row][linkedlist->col]=0;
+			linkedlist=linkedlist->prev;
+			printf(" \n *** BACK TRACK*** \n");
+		}
+		
+		else if( Valid_Number(problem, linkedlist->row, linkedlist->col , linkedlist->Valid_numbers[linkedlist->count]) )
+		{	
+			problem[linkedlist->row][linkedlist->col]= linkedlist->Valid_numbers[linkedlist->count];
+			linkedlist->count+=1; 
+			linkedlist=linkedlist->next; 
+			
+		}
+		else{ 
+			linkedlist->count+=1;
+		}
+			
+		
+		//print_data_linkedlist(linkedlist);
+		
+		
+	}
+	print_sudoku(problem);
 	
 				
-;}		
+}		
 
 
-
+void print_sudoku(int problem[9][9]){
+	for (int row=0; row<9; row++){ 
+		for(int columns=0; columns<9; columns++){
+         printf("%d     ", problem[row][columns]);
+        }
+		printf("\n");
+	}
+}
+		
+				
+void change_value_problem( int(*problem)[9], int row, int col,int val){
+	problem[row][col]=val; 
+}
+void print_data_linkedlist(PSUDOKU linkedlist){
+	printf("\n row is %d \n",linkedlist->row);
+	printf("\n col is %d \n",linkedlist->col);
+	printf("\n count is %d \n",linkedlist->count);
+	printf("\n size is %d \n",linkedlist->size);
+	printf("\n valid number is %d \n",linkedlist->Valid_numbers[0]);
+}
 void test_function_calculate_col(int problem[9][9]){
 	int test_sucess=1;
 	if (calculate_col(problem, 0)==13){}
@@ -343,7 +389,12 @@ int Is_changeable( int(*problem)[9] , int row, int col){
 	else{return 0;} 
 }
 
-
+int tried_all_valid_numbers(PSUDOKU linkedlist){
+	if(linkedlist->count >= linkedlist->size){
+		return 1;
+	}
+	else{ return 0;} 
+}
 
 struct sudoku *create_linked_list(int (*problem)[9], PSUDOKU linkedlist){ // this 
 	PSUDOKU new_ptr; 
@@ -362,6 +413,7 @@ struct sudoku *create_linked_list(int (*problem)[9], PSUDOKU linkedlist){ // thi
 				 
 				 linkedlist->row=i; 
 				 linkedlist->col=j; 
+				 linkedlist->count=0; 
 				 size=get_size_valid_num(problem,i,j);
 				 
 				 linkedlist->size=size; 
