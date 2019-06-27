@@ -1,2 +1,3 @@
 By eliminiating unvalid values in the beginning of the execution, we lessen the combinations we need to try with the algorithm. 
-However, what if we eliminate unvalid values in conjunction with the real time? 
+However, what if we eliminate unvalid values in  real time with the back-track algorithm? 
+I.e if we put in a number in the coordinate. Eliminate all the nodes for that value, in the row, column, and box -> then proceed with normal iteration with back track. 
