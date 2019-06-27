@@ -1,0 +1,2 @@
+By eliminiating unvalid values in the beginning of the executing, we lessen the combinations we need to try with the algorithm. 
+However, what if we eliminate unvalid values in real time? 
