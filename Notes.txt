@@ -1,2 +1,0 @@
-In hindsight, some functions werent needed and its only sufficent to check for duplicates in the box, row and column.
-Therefore calculate_- box, col and row is unneccesary. 
