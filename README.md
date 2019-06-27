@@ -11,7 +11,7 @@ Demonstration of it solving one of the "hardest sudoku puzzle" .
 https://www.telegraph.co.uk/news/science/science-news/9359579/Worlds-hardest-sudoku-can-you-crack-it.html
 
 
-![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/hardestpuzzle.PNG)
+![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/pictures/final_sudoku.PNG)
 
 
 
