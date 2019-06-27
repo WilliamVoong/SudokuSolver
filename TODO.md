@@ -7,6 +7,7 @@ The plan
 4.  if number is not valid , check next next valid number for that coordinate
 5.  if all valid number fails for that coordinate, set the counter to 0, move to previous coordinate, and get the next valid number for 
     that coordinate. repeat from 3. 
+
 ///*********************COMPLETED **************************************************///
 
 SAVING FOR DOCUMENTATION 
