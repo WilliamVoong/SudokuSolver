@@ -1,6 +1,6 @@
 # SudokuSolver - Eliminate then backtrack! 
 Sudoku solver in console. In this implementation of the sudokusolver i used a double linkedlist to store its solvable values and coordinates. 
-The program tries  all valid values and used backtracking whenever a possible solution can't be find for a coordinate. 
+The program tries  all valid values and used backtracking whenever a possible solution couldn't be find for a coordinate. 
 The program only fails if the sudoku is unsolvable, as it tries every single combination of valid values for all coordinates. 
  
 
