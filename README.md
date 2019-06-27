@@ -17,3 +17,8 @@ https://www.telegraph.co.uk/news/science/science-news/9359579/Worlds-hardest-sud
 
 Assuming all combinations are represented in a tree, and each node represents the value of a coordinate in the sudoku.
 We can eliminate possible nodes in the grid depending what clues we got from the original puzzle before implementing the backtracking algorithm, thus we greatly lessen the amount of combinations we need to try.
+
+Finding a orignal backtrack solution on github, and measuring time. 
+The eliminate then backtrack solution is approximately 77% faster.
+![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/sudoku_backtrack.PNG)
+
