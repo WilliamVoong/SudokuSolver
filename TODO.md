@@ -1,4 +1,5 @@
 ///*********************COMPLETED **************************************************///
+
 The plan
 
 1.  create a linked list of every coordinate that contains zero, when creating a member, also get the valid numbers and the size.
