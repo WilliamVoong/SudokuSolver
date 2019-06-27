@@ -24,3 +24,4 @@ The eliminate then backtrack solution is approximately 77% faster, when solving 
 
 ![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/sudoku_backtrack.PNG)
 
+The project that was compared to was https://github.com/rajgopalc/Sudoku-Solver-in-C
