@@ -32,9 +32,7 @@ void test_function_check_no_duplicate_box(int [][9]);
 void test_function_Valid_number(int [][9]);
 
 int main(){
-	struct sudoku *head=( (struct sudoku *) malloc(sizeof(SUDOKU)));
-	PSUDOKU current_node= head;
-	current_node->prev=NULL; 
+	PSUDOKU current_node; 
 	clock_t start, end;
     double cpu_time_used;
 	
@@ -52,7 +50,8 @@ int main(){
 							{ 9, 3, 0,   0, 0, 0,   7, 1, 0 } 
 						
 						};
-	/*int problem[9][9]= { { 0, 0, 0,   0, 0, 0,   0, 0, 0 }, // this sudoku problem is designed to work agaisnt
+	/*int problem[9][9]= {  
+						{ 0, 0, 0,   0, 0, 0,   0, 0, 0 }, // this sudoku problem is designed to work agaisnt
                         { 0, 0, 0,   0, 0, 3,   0, 8, 5 },	// the bruteforce algorithm and therefore slow. 
                         { 0, 0, 1,   0, 2, 0,   0, 0, 0 }, // However the puzzle is still solved in a timely matter (on my machine)
                             
@@ -84,39 +83,17 @@ int main(){
 
 	printf("\n sudoku to be solved : \n");
 	print_sudoku(problem);
+																																		// UNCOMMENT TO TIME 	
+																																		//start = clock();
 	
-	start = clock();
 	current_node=create_linked_list(problem); 
-
+	solve_sudoku(problem,current_node);
+																																		// end= clock();																																
+																																		//cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	
-	while(current_node){
-		if(tried_all_valid_numbers(current_node)){  
-			//  printf(" \n *** BACK TRACK*** \n");
-			current_node->count=0;
-			problem[current_node->row][current_node->col]=0;
-			current_node=current_node->prev;
-			
-		}
-		
-		else if( Valid_Number(problem, current_node->row, current_node->col , current_node->Valid_numbers[current_node->count]) )
-		{	
-			problem[current_node->row][current_node->col]= current_node->Valid_numbers[current_node->count];
-			current_node->count+=1; 
-			current_node=current_node->next; 
-			
-		}
-		else{ 
-			current_node->count+=1;
-		}
-			
-		
-		
-	}
-	end= clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	printf("\n    	**** Solved  *****  \n");
 	print_sudoku(problem);
-	printf("it took %f seconds to solve the puzzle\n", cpu_time_used); 
+																																		//printf("it took %f seconds to solve the puzzle\n", cpu_time_used); 
 				
 	printf("Press ENTER key to Continue\n");  
 	getchar(); 			
@@ -176,6 +153,8 @@ void solve_sudoku(int sudoku[][9],PSUDOKU current_node){
 	}
 	
 }
+
+
 // tests
 void test_function_check_no_duplicate_row(int problem[9][9]){
 	int test_sucess=1;
@@ -328,7 +307,7 @@ int *get_valid_num(int(*problem)[9], int row, int col, int size){
 	return ptr; 
 }
 
-// create linked list
+
 int Is_changeable_coord( int(*problem)[9] , int row, int col){
 	if( problem[row][col]==0){
 		return 1;
