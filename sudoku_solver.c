@@ -11,11 +11,11 @@ typedef struct sudoku{
 	struct sudoku *next;
 } *PSUDOKU,SUDOKU;  
 
-
-void solve_sudoku(int[][9],struct sudoku *);
+int solve_sudoku(int[][9],struct sudoku *);
 int check_no_duplicate_row(int[][9], int,int); 
 int check_no_duplicate_col(int[][9], int,int); 
-int check_no_duplicate_box(int[][9], int,int,int); 
+int check_no_duplicate_box(int[][9], int,int,int);
+int check_grid(int problem[9][9]); 
 int Valid_Number(int[][9],int,int,int);
 
 int get_size_valid_num(int[][9],int,int);
@@ -66,7 +66,7 @@ int main(){
 					};
 */			
 					
-	int problem[9][9]= {{ 8, 0, 0,   0, 0, 0,   0, 0, 0 }, 
+	int problem[9][9]= {{ 8, 0, 8,   0, 0, 0,   0, 0, 0 }, 
                         { 0, 0, 3,   6, 0, 0,   0, 0, 0 },	
                         { 0, 7, 0,   0, 9, 0,   2, 0, 0 }, 
                             
@@ -87,12 +87,22 @@ int main(){
 																																		//start = clock();
 	
 	current_node=create_linked_list(problem); 
-	solve_sudoku(problem,current_node);
+	solve_sudoku(problem,current_node);	
+	int solveable=check_grid(problem);
+	if(solveable){
+		printf("\n    	**** Solved  *****  \n");
+		print_sudoku(problem);
+	}
+	else{ 
+		printf("\n sudoku is not solveable \n");
+	}
 																																		// end= clock();																																
 																																		//cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+																																																																	
 	
-	printf("\n    	**** Solved  *****  \n");
-	print_sudoku(problem);
+	
+	
+	
 																																		//printf("it took %f seconds to solve the puzzle\n", cpu_time_used); 
 				
 	printf("Press ENTER key to Continue\n");  
@@ -120,8 +130,8 @@ void print_sudoku(int problem[9][9]){
 	 
 	}
 }
-void solve_sudoku(int sudoku[][9],PSUDOKU current_node){
-	
+int solve_sudoku(int sudoku[][9],PSUDOKU current_node){
+	PSUDOKU head=current_node->prev; 
 	int value_to_try; 
 	
 	while(current_node){
@@ -147,11 +157,15 @@ void solve_sudoku(int sudoku[][9],PSUDOKU current_node){
 		else{ 
 			current_node->count+=1;
 		}
-			
-		
 		
 	}
-	
+	if( current_node==head ){
+		return 0;
+	}
+	else {
+		return 1;
+	}
+
 }
 
 
@@ -262,6 +276,7 @@ int check_no_duplicate_col(int problem[9][9], int col,int value_to_check){
 	return 1;
 }
 int check_no_duplicate_box( int(*problem)[9], int row, int col,int val){
+	
 	int index_row=row/3; 
 	int index_col=col/3; 
 	for (int i =index_row*3; i < index_row*3+3; i++){
@@ -272,6 +287,23 @@ int check_no_duplicate_box( int(*problem)[9], int row, int col,int val){
 			}			
 	}
 	return 1;
+}
+int check_grid(int problem[9][9]){
+	int temp=0;
+	for (int row =0; row < 9; row++){
+		
+			for(int col =0; col < 9; col++){
+				temp=problem[row][col];
+				problem[row][col]=0;
+				if( ! (Valid_Number(problem,row,col,temp)) ){
+					return 0;
+				}
+				problem[row][col]=temp;
+				
+			}			
+	}
+	return 1;
+	
 }
 
 // getting valid numbers for each cordinate
@@ -356,6 +388,7 @@ struct sudoku *create_linked_list(int (*problem)[9]){ // this
 	current_node->next=NULL; 
 	return head->next; 
 }
+
 
 
 int tried_all_valid_numbers(PSUDOKU current_node){
