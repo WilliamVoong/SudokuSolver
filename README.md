@@ -22,7 +22,7 @@ To expand on this idea you can do this not only from the eliminate combinations 
 
 
 Finding a orignal backtrack solution on github, and measuring time. 
-The eliminate first before executing the backtracking-algorithm solution is approximately 77% faster, when solving the puzzle that is shown above.
+The eliminate first before executing the backtracking-algorithm solution is approximately 77% faster (in this case), when solving the puzzle that is shown above.
 
 ![alt text](https://github.com/WilliamVoong/SudokuSolver/blob/master/sudoku_backtrack.PNG)
 
