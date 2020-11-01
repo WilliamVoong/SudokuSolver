@@ -1,5 +1,5 @@
 # SudokuSolver - Eliminate then backtrack! 
-Sudoku solver in console. I've been thinking about this problem for years and upon reading the wikipedia article https://en.wikipedia.org/wiki/Sudoku_solving_algorithms. The backtracking algorithm sounded trivial so i decided to implement it with a slight improvement!
+Sudoku solver in console. I've been thinking about this problem for years and upon reading the wikipedia article https://en.wikipedia.org/wiki/Sudoku_solving_algorithms. The backtracking algorithm sounded trivial so i decided to implement it with a slight improvement! I also had a more test driven approach than my previous projects.
 
 
 In this implementation of the sudokusolver i used a double linkedlist to store its solvable values and coordinates. 
